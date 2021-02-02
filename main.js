@@ -117,6 +117,27 @@ var someData = {
 	status: "married"
 };
 
+someData.methodOne = function(){
+
+if(this.name){
+
+this.methodTwo = function (){
+delete this.name;
+console.log(this);
+this.methodThree = function (){
+this.name = "Mike";};
+this.methodThree()
+
+
+};
+this.methodTwo()
+}
+
+};
+
+someData.methodOne ()
+console.log(someData);
+
 //***** JS PRACTISE HOMEWORK *****
 // task 1
 //Create array with data, and loop through it, so in the end you console log this:
