@@ -114,29 +114,67 @@ The second method should then create a third method and call it. Third method sh
 var someData = {
 	name: "Peter",
 	lastName: "Dinklage",
-	status: "married"
+	status: "married",
+	checkProperty: function() {
+
+		console.log(this);
+
+		if(this.hasOwnProperty('name')) {
+
+			this.secondMethod = function() {
+
+				delete this.name;
+				console.log(this);
+				
+				this.thirdMethod = function() {
+					this.name = 'Mike';
+					console.log(this);	
+				}
+				this.thirdMethod();
+			}
+			this.secondMethod();
+		}
+	}
 };
 
-someData.methodOne = function(){
+someData.checkProperty();
 
-if(this.name){
+// BONUS:
 
-this.methodTwo = function (){
-delete this.name;
-console.log(this);
-this.methodThree = function (){
-this.name = "Mike";};
-this.methodThree()
+// Try to set name with value it had before.
 
+//SOLUTION
 
+var someData = {
+	name: "Peter",
+	lastName: "Dinklage",
+	status: "married",
+	checkProperty: function() {
+
+		console.log(this);
+
+		if(this.hasOwnProperty('name')) {
+
+			this.secondMethod = function() {
+
+				this.oldNameTemp = this.name;
+
+				delete this.name;
+				console.log(this);
+				
+				this.thirdMethod = function() {
+					this.name = this.oldNameTemp;
+					delete this.oldNameTemp;
+					console.log(this);	
+				}
+				this.thirdMethod();
+			}
+			this.secondMethod();
+		}
+	}
 };
-this.methodTwo()
-}
 
-};
-
-someData.methodOne ()
-console.log(someData);
+someData.checkProperty();
 
 //***** JS PRACTISE HOMEWORK *****
 // task 1
@@ -167,14 +205,13 @@ for (let i = 0; i < someArrays.length; i++) {
 Then create array with multiple objects, each object should contain different names and ages. 
 Call a method on each of them. */
 
-function createObjects(array) {
-    for (var i = 0; i < arrayOfObjects.length; i++) {
-        console.log("Name is " + arrayOfObjects[i].name + " and age is " + arrayOfObjects[i].age);
-
+var object = {
+    printNameAge: function(data) {
+        console.log("The name is " + data.name + ", and age is " + data.age + ".")
     }
-}
+};
 
-arrayOfObjects = [
+var persons= [
     {
         name:"Sofi",
         age:3
@@ -190,4 +227,7 @@ arrayOfObjects = [
     }
 
 ];
-createObjects(arrayOfObjects);
+
+for(var i = 0; i < persons.length; i++) {
+    object.printNameAge(persons[i]);
+}
